@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include "array_list.h"
 
-typedef struct ArrayList{
+struct ArrayList{
 	char **array;
 	size_t capacity;
 	size_t length;
-}ArrayList;
+};
 
-struct ArrayList* array_list_new() {
+ArrayList* array_list_new() {
 	struct ArrayList *list = malloc(sizeof(struct ArrayList));
 	if(list == NULL){
 		printf("Memory allocation failed.\n");
@@ -26,7 +26,7 @@ struct ArrayList* array_list_new() {
 	return list;
 }
 
-void array_list_add_to_end(struct ArrayList* list, const char *str) {
+void array_list_add_to_end(ArrayList* list, const char *str) {
 	if ((*list).length >= (*list).capacity){
 		size_t bigger = (*list).capacity * 2; //Doubling the size
 		char **new_array = realloc((*list).array, sizeof(char *) * bigger);
@@ -45,5 +45,30 @@ void array_list_add_to_end(struct ArrayList* list, const char *str) {
 		return;
 	}
 	(*list).length++;
+}
+
+char* get_arr(ArrayList* list, size_t length){
+	if(list == NULL || length >= (*list).length){
+		return NULL;
+	}
+	return list->array[length];
+}	
+
+size_t get_length(ArrayList* list){
+	if(list == NULL){
+		return 0;
+	}
+	return list->length;
+}
+
+void free_array_list(ArrayList* list){
+	if(list == NULL){
+		return;
+	}
+	for(size_t i = 0; i < (*list).length; i++){
+		free((*list).array[i]);
+	}
+	free((*list).array);
+	free(list);
 }
 	
