@@ -32,7 +32,6 @@ void array_list_add_to_end(ArrayList* list, const char *str) {
 		char **new_array = realloc((*list).array, sizeof(char *) * bigger);
 		if(new_array == NULL){
 			printf("Memory realloc failed. \n");
-			//maybe smt else here
 			return;
 		}
 		(*list).array = new_array;
